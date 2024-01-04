@@ -7,6 +7,17 @@ const getGoals = asyncHandler(async (req, res) => {
     res.status(200).json(goals)
 })
 
+const getGoal = asyncHandler(async (req, res) => {
+    const goal = await GoalModel.findById(req.params.id)
+
+    if (!goal) {
+        res.status(400)
+        throw new Error('Goal not found')
+    }
+
+    res.status(200).json(goal)
+})
+
 const addGoal = asyncHandler(async (req, res) => {
     if (! req.body.text) {
         res.status(400)
@@ -41,6 +52,7 @@ const deleteGoal = asyncHandler(async (req, res) => {
 
 module.exports = {
     getGoals,
+    getGoal,
     addGoal,
     updateGoal,
     deleteGoal
